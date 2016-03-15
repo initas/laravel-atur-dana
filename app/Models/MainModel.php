@@ -3,8 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Libraries\Request;
-use Validator;
 
 class MainModel extends Model
 {
@@ -19,7 +17,7 @@ class MainModel extends Model
     protected $coverResolutions = [
         'on_demand' => '/{$1}/{$2}',
     ];
-    
+
 	/*
     |--------------------------------------------------------------------------
     | METHODS
@@ -50,19 +48,19 @@ class MainModel extends Model
 		}else{
 			$model = $this->first();
 		}
-		
+
 		$model = ($model) ? $model->append($this->appends)->setHidden($this->hidden) : $model;
 
 		return $model;
 	}
 
-    public function getImageAttribute()
+    public function getImageAttribute($value, $fieldName = 'image_url')
     {
-        if($this->image_url){
-            $images['original'] = $this->imagesFolder.'/'.$this->image_url.'?index='.INDEX;
+        if($this->$fieldName){
+            $images['original'] = $this->imagesFolder.'/'.$this->$fieldName.'?index='.INDEX;
 
             foreach($this->coverResolutions as $name => $value){
-                $images[$name] = $this->imagesFolder.$value.'/'.$this->image_url.'?index='.INDEX;
+                $images[$name] = $this->imagesFolder.$value.'/'.$this->$fieldName.'?index='.INDEX;
             }
         }else{
             $images['original'] = $this->imagesFolder.'/not-found?index='. INDEX;;
@@ -76,7 +74,7 @@ class MainModel extends Model
     }
 
     public function validSave(){
-        $validator = Validator::make(Request::all(), $this->rules);
+        $validator = validator()->make(request()->all(), $this->rules);
 
         if($validator->fails()){
             $model['errors'] = $validator->errors();
@@ -85,7 +83,7 @@ class MainModel extends Model
 
             $model = $this->setHidden($this->hide)
                 ->setAppends($this->add)
-                ->one($this->id); 
+                ->one($this->id);
         }
 
         return $model;

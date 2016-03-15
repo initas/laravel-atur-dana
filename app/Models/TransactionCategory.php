@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Libraries\Request;
-
 class TransactionCategory extends MainModel
 {
     /*
@@ -19,19 +17,19 @@ class TransactionCategory extends MainModel
     protected $add = [];
 
     #public
-    
+
     public $rules = [
         'name' => 'required',
         'hex_color' => 'required',
         'icon_class' => 'required'
     ];
-    
+
     /*
     |--------------------------------------------------------------------------
     | METHODS
     |--------------------------------------------------------------------------
     */
-    
+
     public function getAll()
     {
         $model = $this->setAppends($this->add)
@@ -52,9 +50,9 @@ class TransactionCategory extends MainModel
 
     public function postNew()
     {
-        $this->name = Request::input('name');
-        $this->icon_class = Request::input('icon_class');
-        $this->hex_color = Request::input('hex_color');
+        $this->name = request()->input('name');
+        $this->icon_class = request()->input('icon_class');
+        $this->hex_color = request()->input('hex_color');
         $this->user_id = (new User)->getLogOnData()->id;
 
         return $this->validSave();
@@ -76,7 +74,7 @@ class TransactionCategory extends MainModel
     | LOGGED ON APPENDS
     |--------------------------------------------------------------------------
     */
-     
+
     public function getUpdatedAtAttribute($value)
     {
         return strtotime($value);

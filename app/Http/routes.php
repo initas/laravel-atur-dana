@@ -44,7 +44,7 @@ Route::group(['prefix' => '/api/v1'], function () {
 		Route::post('/', 'API\TransactionCategoryController@postNew');
 
 		Route::group(['prefix' => '/{id}'], function () {
-		
+
 			Route::get('/', 'API\TransactionCategoryController@getOne');
 			Route::put('/', 'API\TransactionCategoryController@putUpdate');
 			Route::delete('/', 'API\TransactionCategoryController@deleteRecord');
@@ -59,7 +59,7 @@ Route::group(['prefix' => '/api/v1'], function () {
 		Route::post('/', 'API\TransactionCommentController@postNew');
 
 		Route::group(['prefix' => '/{id}'], function () {
-		
+
 			Route::get('/', 'API\TransactionCommentController@getOne');
 			Route::put('/', 'API\TransactionCommentController@putUpdate');
 			Route::delete('/', 'API\TransactionCommentController@deleteRecord');
@@ -74,7 +74,7 @@ Route::group(['prefix' => '/api/v1'], function () {
 		Route::post('/', 'API\TransactionController@postNew');
 
 		Route::group(['prefix' => '/{id}'], function () {
-		
+
 			Route::get('/', 'API\TransactionController@getOne');
 			Route::put('/', 'API\TransactionController@putUpdate');
 			Route::delete('/', 'API\TransactionController@deleteRecord');
@@ -85,14 +85,14 @@ Route::group(['prefix' => '/api/v1'], function () {
 
 	Route::group(['prefix' => '/users'], function () {
 
-		Route::get('/', 'API\TransactionController@getAll');
-		Route::post('/', 'API\TransactionController@postNew');
-		Route::post('/login', 'API\TransactionController@postLogin');
+		Route::get('/', 'API\UserController@getAll');
+		Route::post('/', 'API\UserController@postNew');
+		Route::post('/login', 'API\UserController@postLogin');
 
 		Route::group(['prefix' => '/{id}'], function () {
-		
-			Route::get('/', 'API\TransactionController@getOne');
-			Route::put('/', 'API\TransactionController@putUpdate');
+
+			Route::get('/', 'API\UserController@getOne');
+			Route::put('/', 'API\UserController@putUpdate');
 
 		});
 

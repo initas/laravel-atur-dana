@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Libraries\Request;
-
 class Transaction extends MainModel
 {
     /*
@@ -20,9 +18,10 @@ class Transaction extends MainModel
     protected $add = ['user', 'category', 'image', 'location', 'logged_on_user'];
 
     #public
-    
+
     public $rules = [
         'amount' => 'required|numeric',
+        'source_id' => 'required|int',
         'transaction_category_id' => 'required|int'
     ];
 
@@ -33,7 +32,7 @@ class Transaction extends MainModel
     */
 
     #GET
-    
+
     public function getAll()
     {
         return $this->setAppends($this->add)
@@ -52,15 +51,16 @@ class Transaction extends MainModel
 
     public function postNew()
     {
-        $this->amount = Request::input('amount');
-        $this->transaction_category_id = Request::input('transaction_category_id');
-        $this->description = Request::input('description');
-        $this->image_url = Request::input('image_url');
-        $this->geo_location = Request::input('geo_location');
-        $this->latitude = Request::input('latitude');
-        $this->longitude = Request::input('longitude');
-        $this->altitude = Request::input('altitude');
-        $this->transaction_at = Request::input('transaction_at');
+        $this->amount = request()->input('amount');
+        $this->source_id = request()->input('source_id');
+        $this->transaction_category_id = request()->input('transaction_category_id');
+        $this->description = request()->input('description');
+        $this->image_url = request()->input('image_url');
+        $this->geo_location = request()->input('geo_location');
+        $this->latitude = request()->input('latitude');
+        $this->longitude = request()->input('longitude');
+        $this->altitude = request()->input('altitude');
+        $this->transaction_at = request()->input('transaction_at');
         $this->user_id = (new User)->getLogOnData()->id;
 
         return $this->validSave();
@@ -70,15 +70,16 @@ class Transaction extends MainModel
 
     public function putUpdate()
     {
-        $this->amount = Request::input('amount');
-        $this->transaction_category_id = Request::input('transaction_category_id');
-        $this->description = Request::input('description');
-        $this->image_url = Request::input('image_url');
-        $this->geo_location = Request::input('geo_location');
-        $this->latitude = Request::input('latitude');
-        $this->longitude = Request::input('longitude');
-        $this->altitude = Request::input('altitude');
-        $this->transaction_at = Request::input('transaction_at');
+        $this->amount = request()->input('amount');
+        $this->source_id = request()->input('source_id');
+        $this->transaction_category_id = request()->input('transaction_category_id');
+        $this->description = request()->input('description');
+        $this->image_url = request()->input('image_url');
+        $this->geo_location = request()->input('geo_location');
+        $this->latitude = request()->input('latitude');
+        $this->longitude = request()->input('longitude');
+        $this->altitude = request()->input('altitude');
+        $this->transaction_at = request()->input('transaction_at');
         $this->user_id = (new User)->getLogOnData()->id;
 
         return $this->validSave();
@@ -131,17 +132,17 @@ class Transaction extends MainModel
         $model = ($model) ? $model : $this;
         $model = $model->where('status_id', '!=', 0)->orderBy('id');
 
-        if($categories = Request::input('categories')){
+        if($categories = request()->input('categories')){
             $categories = (is_array($categories)) ? $categories : [$categories];
             $model = $model->whereIn('transaction_category_id', $categories);
         }
 
-        if($users = Request::input('users')){
+        if($users = request()->input('users')){
             $users = (is_array($users)) ? $users : [$users];
             $model = $model->whereIn('user_id', $users);
         }
 
-        $limit = Request::input('limit', 15);
+        $limit = request()->input('limit', 15);
         $model = $model->paginate($limit);
 
         return $model;

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Model\User as Model;
+use App\Models\User as Model;
 
 class UserController extends MainController
 {
@@ -83,7 +83,7 @@ class UserController extends MainController
     | CONSTRUCTOR
     |--------------------------------------------------------------------------
     */
-    
+
 	public function __construct(Model $model)
     {
         $this->model = $model;
