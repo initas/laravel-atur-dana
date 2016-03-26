@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 15, 2016 at 11:54 AM
+-- Generation Time: Mar 26, 2016 at 07:51 PM
 -- Server version: 10.0.17-MariaDB
 -- PHP Version: 5.6.14
 
@@ -87,7 +87,8 @@ CREATE TABLE `transactions` (
 --
 
 INSERT INTO `transactions` (`id`, `user_id`, `source_id`, `transaction_category_id`, `amount`, `description`, `image_url`, `geo_location`, `latitude`, `longitude`, `altitude`, `transaction_at`, `created_at`, `updated_at`, `status_id`) VALUES
-(1, 1, 1, 1, 1, 'updated dummy description', NULL, NULL, NULL, NULL, NULL, '2016-03-13 17:55:17', '2016-03-11 20:10:48', '2016-03-15 10:53:55', 0);
+(1, 1, 1, 1, 1, 'updated dummy description', NULL, NULL, NULL, NULL, NULL, '2016-03-13 17:55:17', '2016-03-11 20:10:48', '2016-03-15 10:53:55', 0),
+(56, 2, 1, 1, 1, 'dummy description', NULL, '', 0, 0, 0, '0000-00-00 00:00:00', '2016-03-26 08:38:24', '2016-03-26 08:38:24', 1);
 
 -- --------------------------------------------------------
 
@@ -226,7 +227,7 @@ ALTER TABLE `sources`
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 --
 -- AUTO_INCREMENT for table `transaction_categories`
 --

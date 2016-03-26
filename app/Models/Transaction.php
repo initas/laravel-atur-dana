@@ -14,8 +14,8 @@ class Transaction extends MainModel
 
 	protected $table = 'transactions';
     protected $hidden = ['pivot'];
-    protected $hide = ['user_id', 'transaction_category_id', 'image_url', 'geo_location', 'latitude', 'longitude', 'altitude', 'created_at', 'status_id'];
-    protected $add = ['user', 'category', 'image', 'location', 'logged_on_user'];
+    protected $hide = ['user_id', 'source_id', 'transaction_category_id', 'image_url', 'geo_location', 'latitude', 'longitude', 'altitude', 'created_at', 'status_id'];
+    protected $add = ['user', 'source', 'category', 'image', 'location', 'logged_on_user'];
 
     #public
 
@@ -106,11 +106,6 @@ class Transaction extends MainModel
         return $this->hasOne('App\Models\TransactionCategory', 'id', 'transaction_category_id');
     }
 
-    public function user()
-    {
-        return $this->hasOne('App\Models\User', 'id', 'user_id');
-    }
-
     public function comments()
     {
         return $this->hasMany('App\Models\TransactionComment');
@@ -119,6 +114,16 @@ class Transaction extends MainModel
     public function likes()
     {
         return $this->belongsToMany('App\Models\User', 'transaction_likes', 'transaction_id', 'user_id');
+    }
+
+    public function source()
+    {
+        return $this->hasOne('App\Models\Source', 'id', 'source_id');
+    }
+
+    public function user()
+    {
+        return $this->hasOne('App\Models\User', 'id', 'user_id');
     }
 
     /*
@@ -159,19 +164,28 @@ class Transaction extends MainModel
         return $this->category()->select(['id', 'name'])->first();
     }
 
-    public function getUserAttribute()
-    {
-        return $this->user()->select(['id', 'full_name'])->first();
-    }
-
     public function getLocationAttribute()
     {
         return [
-                'name' => $this->geo_location,
-                'latitude' => $this->latitude,
-                'longitude' => $this->longitude,
-                'altitude' => $this->altitude,
+            'name' => $this->geo_location,
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
+            'altitude' => $this->altitude,
         ];
+    }
+
+    public function getSourceAttribute()
+    {
+        return $this->source()->select(['id', 'name', 'hex_color'])->first();
+    }
+
+    public function getUserAttribute()
+    {
+        return $this->user()
+            ->select(['id', 'full_name', 'image_url'])
+            ->first()
+            ->setHidden(['image_url'])
+            ->setAppends(['image']);
     }
 
     public function getUpdatedAtAttribute($value)

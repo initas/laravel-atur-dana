@@ -36,7 +36,27 @@ Route::group(['middleware' => ['web']], function () {
 |--------------------------------------------------------------------------
 */
 
+
 Route::group(['prefix' => '/api/v1'], function () {
+
+	Route::group(['prefix' => '/collections'], function () {
+		Route::get('/dashboard', 'API\CollectionController@getDashboard');
+	});
+
+	Route::group(['prefix' => '/sources'], function () {
+
+		Route::get('/', 'API\SourceController@getAll');
+		Route::post('/', 'API\SourceController@postNew');
+
+		Route::group(['prefix' => '/{id}'], function () {
+
+			Route::get('/', 'API\SourceController@getOne');
+			Route::put('/', 'API\SourceController@putUpdate');
+			Route::delete('/', 'API\SourceController@deleteRecord');
+
+		});
+
+	});
 
 	Route::group(['prefix' => '/transaction-categories'], function () {
 
