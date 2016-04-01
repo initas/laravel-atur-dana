@@ -5,237 +5,6 @@
 	"order": [],
 	"folders": [
 		{
-			"id": "32badd96-4868-c9a6-1d3f-028c6834ff0b",
-			"name": "accounts",
-			"description": "",
-			"order": [
-				"cf965d87-531e-049f-8d30-cbe5613dae4e",
-				"1ccd91b7-ae8e-fd1a-0d31-56b0634183c7",
-				"5b679d1f-1677-5c5c-ddb6-219c5607ea41",
-				"4436515d-76ba-f64e-4a2d-71198326dd71",
-				"c3abf9e5-343a-91ac-ae46-2e27aeb4560a"
-			],
-			"owner": 0,
-			"requests": [
-				{
-					"id": "567f1347-ca4e-46d1-cb76-c42f5e2b6e73",
-					"headers": "access-token: debug\nauth-token: admin\n",
-					"url": "{{atur-dana.api.v1}}/transactions",
-					"preRequestScript": "",
-					"pathVariables": {},
-					"method": "GET",
-					"data": [],
-					"dataMode": "params",
-					"version": 2,
-					"tests": "",
-					"currentHelper": "normal",
-					"helperAttributes": "{}",
-					"time": 1457720105094,
-					"name": "all",
-					"description": "",
-					"collectionId": "f2bcd66b-a6c1-a7eb-96da-9bded6e4d8d9",
-					"responses": [],
-					"synced": true,
-					"folder": "a1981f41-6063-8523-e18e-e3a4e685a9c6"
-				},
-				{
-					"id": "01521b9f-58af-fccb-399f-81de913e805e",
-					"headers": "access-token: debug\nauth-token: admin\n",
-					"url": "{{atur-dana.api.v1}}/transactions/1",
-					"preRequestScript": "",
-					"pathVariables": {},
-					"method": "GET",
-					"data": [],
-					"dataMode": "params",
-					"version": 2,
-					"tests": "",
-					"currentHelper": "normal",
-					"helperAttributes": "{}",
-					"time": 1457722682093,
-					"name": "one",
-					"description": "",
-					"collectionId": "f2bcd66b-a6c1-a7eb-96da-9bded6e4d8d9",
-					"responses": [],
-					"synced": true,
-					"folder": "a1981f41-6063-8523-e18e-e3a4e685a9c6"
-				},
-				{
-					"id": "0459578f-baa4-228e-e05d-df77ccdb2594",
-					"headers": "access-token: debug\nauth-token: mf\n",
-					"url": "{{atur-dana.api.v1}}/transactions",
-					"preRequestScript": "",
-					"pathVariables": {},
-					"method": "POST",
-					"data": [
-						{
-							"key": "amount",
-							"value": "1",
-							"type": "text",
-							"enabled": true
-						},
-						{
-							"key": "transaction_category_id",
-							"value": "1",
-							"type": "text",
-							"enabled": true
-						},
-						{
-							"key": "description",
-							"value": "dummy description",
-							"type": "text",
-							"enabled": true
-						},
-						{
-							"key": "image_url",
-							"value": "",
-							"type": "file",
-							"enabled": true
-						},
-						{
-							"key": "geo_location",
-							"value": "",
-							"type": "text",
-							"enabled": true
-						},
-						{
-							"key": "latitude",
-							"value": "",
-							"type": "text",
-							"enabled": true
-						},
-						{
-							"key": "longitude",
-							"value": "",
-							"type": "text",
-							"enabled": true
-						},
-						{
-							"key": "altitude",
-							"value": "",
-							"type": "text",
-							"enabled": true
-						},
-						{
-							"key": "transaction_at",
-							"value": "",
-							"type": "text",
-							"enabled": true
-						}
-					],
-					"dataMode": "params",
-					"version": 2,
-					"tests": "",
-					"currentHelper": "normal",
-					"helperAttributes": "{}",
-					"time": 1457815715343,
-					"name": "new",
-					"description": "",
-					"collectionId": "f2bcd66b-a6c1-a7eb-96da-9bded6e4d8d9",
-					"responses": [],
-					"synced": true,
-					"folder": "a1981f41-6063-8523-e18e-e3a4e685a9c6"
-				},
-				{
-					"id": "d5f4b12e-f0a0-557e-7257-02e788b7c96e",
-					"headers": "access-token: debug\nauth-token: mf\n",
-					"url": "{{atur-dana.api.v1}}/transactions/1",
-					"preRequestScript": "",
-					"pathVariables": {},
-					"method": "PUT",
-					"data": [
-						{
-							"key": "amount",
-							"value": "1",
-							"type": "text",
-							"enabled": true
-						},
-						{
-							"key": "transaction_category_id",
-							"value": "1",
-							"type": "text",
-							"enabled": true
-						},
-						{
-							"key": "description",
-							"value": "updated dummy description",
-							"type": "text",
-							"enabled": true
-						},
-						{
-							"key": "image_url",
-							"value": "",
-							"type": "file",
-							"enabled": true
-						},
-						{
-							"key": "geo_location",
-							"value": "",
-							"type": "text",
-							"enabled": true
-						},
-						{
-							"key": "latitude",
-							"value": "",
-							"type": "text",
-							"enabled": true
-						},
-						{
-							"key": "longitude",
-							"value": "",
-							"type": "text",
-							"enabled": true
-						},
-						{
-							"key": "altitude",
-							"value": "",
-							"type": "text",
-							"enabled": true
-						},
-						{
-							"key": "transaction_at",
-							"value": "",
-							"type": "text",
-							"enabled": true
-						}
-					],
-					"dataMode": "params",
-					"version": 2,
-					"tests": "",
-					"currentHelper": "normal",
-					"helperAttributes": "{}",
-					"time": 1457889007462,
-					"name": "update",
-					"description": "",
-					"collectionId": "f2bcd66b-a6c1-a7eb-96da-9bded6e4d8d9",
-					"responses": [],
-					"synced": true,
-					"folder": "a1981f41-6063-8523-e18e-e3a4e685a9c6"
-				},
-				{
-					"id": "c6e0ebaa-f5c2-e631-92aa-c06011999aab",
-					"headers": "access-token: debug\nauth-token: admin\n",
-					"url": "{{atur-dana.api.v1}}/transactions/1",
-					"preRequestScript": "",
-					"pathVariables": {},
-					"method": "DELETE",
-					"data": [],
-					"dataMode": "params",
-					"version": 2,
-					"tests": "",
-					"currentHelper": "normal",
-					"helperAttributes": "{}",
-					"time": 1457722380965,
-					"name": "record",
-					"description": "",
-					"collectionId": "f2bcd66b-a6c1-a7eb-96da-9bded6e4d8d9",
-					"responses": [],
-					"synced": true,
-					"folder": "a1981f41-6063-8523-e18e-e3a4e685a9c6"
-				}
-			],
-			"collectionId": "f2bcd66b-a6c1-a7eb-96da-9bded6e4d8d9"
-		},
-		{
 			"id": "b431e0ae-5056-46c4-1652-16b4ff7cb586",
 			"name": "collections",
 			"description": "",
@@ -244,6 +13,15 @@
 			],
 			"owner": 0,
 			"collectionId": "3c12f099-4844-e769-38ff-773cb3768181"
+		},
+		{
+			"id": "dd0564ee-af12-4180-552a-261118bc1341",
+			"name": "embed",
+			"description": "",
+			"order": [
+				"f1bf3ba7-8e44-c9a1-d051-e046bb63d43d"
+			],
+			"owner": 0
 		},
 		{
 			"id": "4dab5dc6-8472-2ec8-ee60-ba1e6e787ac4",
@@ -583,26 +361,6 @@
 			"folder": "7280454d-f496-2f84-c602-adee06bdc310"
 		},
 		{
-			"id": "1ccd91b7-ae8e-fd1a-0d31-56b0634183c7",
-			"headers": "access-token: debug\nauth-token: admin\n",
-			"url": "{{atur-dana.api.v1}}/accounts/1",
-			"preRequestScript": "",
-			"pathVariables": {},
-			"method": "GET",
-			"data": [],
-			"dataMode": "params",
-			"version": 2,
-			"tests": "",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1457893988480,
-			"name": "one",
-			"description": "",
-			"collectionId": "3c12f099-4844-e769-38ff-773cb3768181",
-			"responses": [],
-			"folder": "32badd96-4868-c9a6-1d3f-028c6834ff0b"
-		},
-		{
 			"id": "24183a94-ad86-43b1-abcb-65d948818973",
 			"headers": "access-token: debug\nauth-token: admin\n",
 			"url": "{{atur-dana.api.v1}}/transaction-categories/1",
@@ -688,26 +446,6 @@
 			"collectionId": "3c12f099-4844-e769-38ff-773cb3768181",
 			"responses": [],
 			"folder": "b5d16cb5-65cb-5d22-6c9d-b315cee74286"
-		},
-		{
-			"id": "4436515d-76ba-f64e-4a2d-71198326dd71",
-			"headers": "access-token: debug\nauth-token: mf\n",
-			"url": "{{atur-dana.api.v1}}/accounts/1",
-			"preRequestScript": "",
-			"pathVariables": {},
-			"method": "PUT",
-			"data": [],
-			"dataMode": "params",
-			"version": 2,
-			"tests": "",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1457894020874,
-			"name": "update",
-			"description": "",
-			"collectionId": "3c12f099-4844-e769-38ff-773cb3768181",
-			"responses": [],
-			"folder": "32badd96-4868-c9a6-1d3f-028c6834ff0b"
 		},
 		{
 			"id": "52b25d1d-0736-f6d2-7c37-ad89290a8e0a",
@@ -803,26 +541,6 @@
 			"collectionId": "3c12f099-4844-e769-38ff-773cb3768181",
 			"responses": [],
 			"folder": "cb29a368-de94-488c-b164-a4eddca38d69"
-		},
-		{
-			"id": "5b679d1f-1677-5c5c-ddb6-219c5607ea41",
-			"headers": "access-token: debug\nauth-token: mf\n",
-			"url": "{{atur-dana.api.v1}}/accounts",
-			"preRequestScript": "",
-			"pathVariables": {},
-			"method": "POST",
-			"data": [],
-			"dataMode": "params",
-			"version": 2,
-			"tests": "",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1457894014313,
-			"name": "new",
-			"description": "",
-			"collectionId": "3c12f099-4844-e769-38ff-773cb3768181",
-			"responses": [],
-			"folder": "32badd96-4868-c9a6-1d3f-028c6834ff0b"
 		},
 		{
 			"id": "769cc0ce-4d25-78f1-f2c7-dcc78a4c7165",
@@ -1047,26 +765,6 @@
 			"responses": []
 		},
 		{
-			"id": "c3abf9e5-343a-91ac-ae46-2e27aeb4560a",
-			"headers": "access-token: debug\nauth-token: admin\n",
-			"url": "{{atur-dana.api.v1}}/accounts/1",
-			"preRequestScript": "",
-			"pathVariables": {},
-			"method": "DELETE",
-			"data": [],
-			"dataMode": "params",
-			"version": 2,
-			"tests": "",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1457894002885,
-			"name": "record",
-			"description": "",
-			"collectionId": "3c12f099-4844-e769-38ff-773cb3768181",
-			"responses": [],
-			"folder": "32badd96-4868-c9a6-1d3f-028c6834ff0b"
-		},
-		{
 			"id": "ccf0ed27-c923-4048-8646-e7c30cba93af",
 			"headers": "access-token: debug\nauth-token: admin\n",
 			"url": "{{atur-dana.api.v1}}/transaction-categories",
@@ -1104,26 +802,6 @@
 			"collectionId": "3c12f099-4844-e769-38ff-773cb3768181",
 			"responses": [],
 			"folder": "7280454d-f496-2f84-c602-adee06bdc310"
-		},
-		{
-			"id": "cf965d87-531e-049f-8d30-cbe5613dae4e",
-			"headers": "access-token: debug\nauth-token: admin\n",
-			"url": "{{atur-dana.api.v1}}/accounts",
-			"preRequestScript": "",
-			"pathVariables": {},
-			"method": "GET",
-			"data": [],
-			"dataMode": "params",
-			"version": 2,
-			"tests": "",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1457893981372,
-			"name": "all",
-			"description": "",
-			"collectionId": "3c12f099-4844-e769-38ff-773cb3768181",
-			"responses": [],
-			"folder": "32badd96-4868-c9a6-1d3f-028c6834ff0b"
 		},
 		{
 			"id": "d51ada4d-15b6-5443-8cc3-e4f85949925c",
@@ -1295,6 +973,25 @@
 			"collectionId": "3c12f099-4844-e769-38ff-773cb3768181",
 			"responses": [],
 			"folder": "b5d16cb5-65cb-5d22-6c9d-b315cee74286"
+		},
+		{
+			"id": "f1bf3ba7-8e44-c9a1-d051-e046bb63d43d",
+			"headers": "access-token: debug\nauth-token: admin\n",
+			"url": "http://localhost/aturdana/public/embed/100/100/users/dummy1.jpg",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1459501071129,
+			"name": "on-demand",
+			"description": "",
+			"collectionId": "3c12f099-4844-e769-38ff-773cb3768181",
+			"responses": []
 		},
 		{
 			"id": "f911e625-466b-c34b-7f99-df78f8aa9286",

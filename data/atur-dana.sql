@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 28, 2016 at 05:04 AM
+-- Generation Time: Apr 01, 2016 at 10:57 AM
 -- Server version: 10.0.17-MariaDB
 -- PHP Version: 5.6.14
 
@@ -172,8 +172,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `fb_id`, `unique_id`, `email`, `username`, `password`, `full_name`, `birthday`, `gender_id`, `image_url`, `cover_image_url`, `auth_token`, `point_total`, `last_login_at`, `created_at`, `updated_at`, `status_id`) VALUES
-(1, NULL, '1', 'admin@situs.id', 'admin', '2133fc4d88502222bbf42c116a20700b4d78e0f1cbd4b09e6f23460b4525fa7c2f', 'Inara Risyah', NULL, NULL, NULL, NULL, 'c7c3565bef6a5cf4c562d672687cd8e8', 0, '2016-02-11 00:27:45', '2016-02-04 09:43:25', '2016-03-28 02:53:36', 1),
-(2, NULL, '2', 'yuna@situs.id', 'mf', '2133fc4d88502222bbf42c116a20700b4d78e0f1cbd4b09e6f23460b4525fa7c2f', 'Yuna Fiyina', NULL, NULL, NULL, NULL, '7abcf6fe946c0ecbb0df9ed7ccc2a465', 0, NULL, '2016-02-04 09:43:25', '2016-03-28 03:04:24', 1);
+(1, NULL, '1', 'admin@situs.id', 'admin', '2133fc4d88502222bbf42c116a20700b4d78e0f1cbd4b09e6f23460b4525fa7c2f', 'Inara Risyah', NULL, NULL, 'dummy1.jpg', NULL, 'c7c3565bef6a5cf4c562d672687cd8e8', 0, '2016-02-11 00:27:45', '2016-02-04 09:43:25', '2016-04-01 07:13:23', 1),
+(2, NULL, '2', 'yuna@situs.id', 'yuna', '2133fc4d88502222bbf42c116a20700b4d78e0f1cbd4b09e6f23460b4525fa7c2f', 'Yuna Fiyina', NULL, NULL, 'dummy2.jpg', NULL, '7abcf6fe946c0ecbb0df9ed7ccc2a465', 0, NULL, '2016-02-04 09:43:25', '2016-04-01 07:13:56', 1);
 
 --
 -- Indexes for dumped tables

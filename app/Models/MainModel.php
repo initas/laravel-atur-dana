@@ -12,7 +12,7 @@ class MainModel extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $imagesFolder = SERVER.'/image/embed';
+    protected $imagesFolder = SERVER.'/embed';
 
     protected $coverResolutions = [
         'on_demand' => '/{$1}/{$2}',

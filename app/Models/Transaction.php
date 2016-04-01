@@ -161,7 +161,7 @@ class Transaction extends MainModel
 
     public function getCategoryAttribute()
     {
-        return $this->category()->select(['id', 'name'])->first();
+        return $this->category()->select(['id', 'name', 'hex_color', 'icon_class'])->first();
     }
 
     public function getLocationAttribute()

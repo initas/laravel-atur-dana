@@ -14,7 +14,7 @@ class Source extends MainModel
 
     protected $table = 'sources';
     protected $hide = ['created_at', 'status_id'];
-    protected $add = [];
+    protected $add = ['amount', 'transaction_count', 'collaborator_count'];
 
     #public
 
@@ -75,9 +75,23 @@ class Source extends MainModel
     |--------------------------------------------------------------------------
     */
 
+    public function getTransactionCountAttribute()
+    {
+        return 121;
+    }
+
+    public function getCollaboratorCountAttribute()
+    {
+        return 77;
+    }
+
+    public function getAmountAttribute()
+    {
+        return 127000000000;
+    }
+
     public function getUpdatedAtAttribute($value)
     {
         return strtotime($value);
     }
-
 }

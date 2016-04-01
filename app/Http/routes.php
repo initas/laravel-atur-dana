@@ -36,7 +36,6 @@ Route::group(['middleware' => ['web']], function () {
 |--------------------------------------------------------------------------
 */
 
-
 Route::group(['prefix' => '/api/v1'], function () {
 
 	Route::group(['prefix' => '/collections'], function () {
@@ -118,4 +117,20 @@ Route::group(['prefix' => '/api/v1'], function () {
 
 	});
 
+});
+
+/*
+|--------------------------------------------------------------------------
+| On Demand Image Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::group(array('prefix' => 'embed'), function()
+{
+	Route::get('thumb/{size}/{file_name}', 'API\EmbedController@getThumb')->where('file_name','.+');
+	Route::get('height/{height}/{file_name}', 'API\EmbedController@getByHeight')->where('file_name','.+');
+	Route::get('width/{width}/{file_name}', 'API\EmbedController@getByWidth')->where('file_name','.+');
+	Route::get('{x}/{y}/{width}/{height}/{file_name}', 'API\EmbedController@getCroppedXY')->where('file_name','.+');
+	Route::get('{width}/{height}/{file_name}', 'API\EmbedController@getCropped')->where('file_name','.+');
+	Route::get('/{file_name}', 'API\EmbedController@getOriginal')->where('file_name','.+');
 });

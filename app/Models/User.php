@@ -17,6 +17,8 @@ class User extends MainModel
     protected $hide = ['password', 'fb_id', 'unique_id', 'created_at', 'status_id', 'auth_token', 'image_url', 'cover_image_url'];
     protected $add = ['image', 'cover_image'];
 
+    protected $imagesFolder = SERVER.'/embed/users';
+
     /*
     |--------------------------------------------------------------------------
     | METHODS

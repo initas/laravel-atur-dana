@@ -53,7 +53,7 @@ $whitelist = array(
 );
 
 if(in_array($serverName, $whitelist)){
-	$server = $server.'/zero/public';
+	$server = $server.'/aturdana/public';
 }
 
 //aws.dev server
@@ -63,17 +63,7 @@ $whitelist = array(
 );
 
 if(in_array($serverName, $whitelist)){
-	$server = $server.'/nomad-zero/dev/public';
-}
-
-//development server
-
-$whitelist = array(
-    '202.59.166.6'
-);
-
-if(in_array($serverName, $whitelist)){
-	$server = $server.'/zero/dev';
+	$server = $server.'/public';
 }
 
 define('SERVER', $server);
