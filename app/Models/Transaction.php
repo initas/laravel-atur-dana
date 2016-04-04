@@ -198,6 +198,24 @@ class Transaction extends MainModel
         return strtotime($value);
     }
 
+    public function getImageAttribute($value, $fieldName = 'image_url'){
+        if($this->$fieldName){
+            $images['original'] = $this->imagesFolder.'/'.$this->$fieldName.'?index='.INDEX;
+
+            foreach($this->coverResolutions as $name => $value){
+                $images[$name] = $this->imagesFolder.$value.'/'.$this->$fieldName.'?index='.INDEX;
+            }
+        }else{
+            $images['original'] = null;
+
+            foreach($this->coverResolutions as $name => $value){
+                $images[$name] = null;
+            }
+        }
+
+        return $images;
+    }
+
     /*
     |--------------------------------------------------------------------------
     | LOGGED ON APPENDS

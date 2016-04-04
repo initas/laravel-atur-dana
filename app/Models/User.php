@@ -14,8 +14,8 @@ class User extends MainModel
 
     protected $table = 'users';
     protected $hidden = ['password'];
-    protected $hide = ['password', 'fb_id', 'unique_id', 'created_at', 'status_id', 'auth_token', 'image_url', 'cover_image_url'];
-    protected $add = ['image', 'cover_image'];
+    public $hide = ['password', 'fb_id', 'unique_id', 'created_at', 'status_id', 'auth_token', 'image_url', 'cover_image_url', 'pivot'];
+    public $add = ['image', 'cover_image'];
 
     protected $imagesFolder = SERVER.'/embed/users';
 
@@ -31,7 +31,7 @@ class User extends MainModel
     {
         return $this->setAppends($this->add)
             ->setHidden($this->hide)
-            ->transform($this->filter());
+            ->transform($this->get());
     }
 
     public function getOne($id)

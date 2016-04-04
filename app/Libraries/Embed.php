@@ -4,6 +4,7 @@ namespace App\Libraries;
 
 class Embed{
 	const FOLDER_PATH = 'uploaded';
+
 	public static function original($file_name){
 		$path = self::FOLDER_PATH.'/'.$file_name;
 		$path = self::validatePath($path);
@@ -148,14 +149,15 @@ class Embed{
 		}
 		return $resampled_image;
 	}
+
 	private static function validatePath($image_url){
-		//dd($image_url);
 		if(!file_exists($image_url)){
 			$image_url = 'images/not-found.png';
 		}
 
 		return $image_url;
 	}
+
 	private static function createImage($path, $mime){
 		if($mime == 'image/jpeg'){
 			$image = imagecreatefromjpeg($path);
@@ -169,6 +171,7 @@ class Embed{
 
 		return $image;
 	}
+	
 	private static function imageOutput($file, $mime){
 		
 		if($mime == 'image/jpeg'){

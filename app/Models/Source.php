@@ -13,8 +13,8 @@ class Source extends MainModel
 	#protected
 
     protected $table = 'sources';
-    protected $hide = ['created_at', 'status_id'];
-    protected $add = ['amount', 'transaction_count', 'collaborator_count'];
+    protected $hide = ['user_id', 'created_at', 'status_id'];
+    protected $add = ['amount', 'transaction_count', 'collaborator_count', 'user', 'collaborators'];
 
     #public
 
@@ -66,7 +66,12 @@ class Source extends MainModel
 
     public function user()
     {
-        return $this->belongsTo('App\Model\User');
+        return $this->hasOne('App\Models\User', 'id', 'user_id');
+    }
+
+    public function collaborators()
+    {
+        return $this->belongsToMany('App\Models\User', 'sources_collaborators', 'source_id', 'user_id');
     }
 
     /*
@@ -93,5 +98,27 @@ class Source extends MainModel
     public function getUpdatedAtAttribute($value)
     {
         return strtotime($value);
+    }
+
+    public function getCollaboratorsAttribute()
+    {
+        $user = new User();
+
+        $filter = $this->collaborators()
+            ->select(['users.id', 'full_name', 'users.image_url'])
+            ->get();
+
+        return $user->setAppends(['image'])
+            ->setHidden($user->hide)
+            ->transform($filter);
+    }
+
+    public function getUserAttribute()
+    {
+        return $this->user()
+            ->select(['id', 'full_name', 'image_url'])
+            ->first()
+            ->setHidden(['image_url'])
+            ->setAppends(['image']);
     }
 }
