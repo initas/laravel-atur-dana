@@ -69,6 +69,16 @@ class Source extends MainModel
         return $this->hasOne('App\Models\User', 'id', 'user_id');
     }
 
+    public function transactions()
+    {
+        return $this->hasMany('App\Models\Transaction', 'source_id', 'id');
+    }
+
+    public function transfers()
+    {
+        return $this->hasMany('App\Models\Transaction', 'to_source_id', 'id');
+    }
+
     public function collaborators()
     {
         return $this->belongsToMany('App\Models\User', 'sources_collaborators', 'source_id', 'user_id');
@@ -82,17 +92,17 @@ class Source extends MainModel
 
     public function getTransactionCountAttribute()
     {
-        return 121;
+        return $this->transactions()->count() + $this->transfers()->count();
     }
 
     public function getCollaboratorCountAttribute()
     {
-        return 77;
+        return $this->collaborators()->count();
     }
 
     public function getAmountAttribute()
     {
-        return 127000000000;
+        return $this->transactions()->sum('amount') + $this->transfers()->sum('amount');
     }
 
     public function getUpdatedAtAttribute($value)

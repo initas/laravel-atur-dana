@@ -14,8 +14,8 @@ class Transaction extends MainModel
 
 	protected $table = 'transactions';
     protected $hidden = ['pivot'];
-    protected $hide = ['user_id', 'source_id', 'transaction_category_id', 'image_url', 'geo_location', 'latitude', 'longitude', 'altitude', 'created_at', 'status_id'];
-    protected $add = ['user', 'source', 'category', 'image', 'location', 'logged_on_user'];
+    protected $hide = ['user_id', 'source_id', 'to_source_id', 'transaction_category_id', 'image_url', 'geo_location', 'latitude', 'longitude', 'altitude', 'created_at', 'status_id'];
+    protected $add = ['user', 'source', 'to_source', 'category', 'image', 'location', 'logged_on_user'];
 
     #public
 
@@ -121,6 +121,11 @@ class Transaction extends MainModel
         return $this->hasOne('App\Models\Source', 'id', 'source_id');
     }
 
+    public function toSource()
+    {
+        return $this->hasOne('App\Models\Source', 'id', 'to_source_id');
+    }
+
     public function user()
     {
         return $this->hasOne('App\Models\User', 'id', 'user_id');
@@ -161,7 +166,13 @@ class Transaction extends MainModel
 
     public function getCategoryAttribute()
     {
-        return $this->category()->select(['id', 'name', 'hex_color', 'icon_class'])->first();
+        $result = $this->category()->select(['id', 'name', 'hex_color', 'icon_class'])->first();
+
+        if($this->to_source_id){
+            $result->hex_color = $this->source()->pluck('hex_color')->first();
+        }
+
+        return $result;
     }
 
     public function getLocationAttribute()
@@ -177,6 +188,11 @@ class Transaction extends MainModel
     public function getSourceAttribute()
     {
         return $this->source()->select(['id', 'name', 'hex_color'])->first();
+    }
+
+    public function getToSourceAttribute()
+    {
+        return $this->toSource()->select(['id', 'name', 'hex_color'])->first();
     }
 
     public function getUserAttribute()

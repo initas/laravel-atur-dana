@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 04, 2016 at 07:55 PM
+-- Generation Time: May 21, 2016 at 08:29 PM
 -- Server version: 10.0.17-MariaDB
 -- PHP Version: 5.6.14
 
@@ -78,6 +78,7 @@ CREATE TABLE `transactions` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `source_id` int(11) NOT NULL,
+  `to_source_id` int(11) DEFAULT NULL,
   `transaction_category_id` int(11) NOT NULL,
   `amount` float NOT NULL,
   `description` text,
@@ -96,10 +97,11 @@ CREATE TABLE `transactions` (
 -- Dumping data for table `transactions`
 --
 
-INSERT INTO `transactions` (`id`, `user_id`, `source_id`, `transaction_category_id`, `amount`, `description`, `image_url`, `geo_location`, `latitude`, `longitude`, `altitude`, `transaction_at`, `created_at`, `updated_at`, `status_id`) VALUES
-(1, 1, 1, 2, 50000, NULL, NULL, NULL, NULL, NULL, NULL, '2016-03-13 17:55:17', '2016-03-11 20:10:48', '2016-03-28 02:47:55', 1),
-(2, 2, 2, 1, 250000, 'Lumayan baru gajian', 'dummy.jpg', 'Sate Khas Senayan', '-6.2173012', '106.7838386', NULL, '2016-03-15 02:27:18', '2016-03-26 08:38:24', '2016-04-04 15:45:49', 1),
-(3, 1, 1, 1, 700000, 'Tarik tunai', NULL, NULL, NULL, NULL, NULL, '2016-03-28 02:34:31', '2016-03-28 02:34:31', '2016-03-28 03:04:00', 1);
+INSERT INTO `transactions` (`id`, `user_id`, `source_id`, `to_source_id`, `transaction_category_id`, `amount`, `description`, `image_url`, `geo_location`, `latitude`, `longitude`, `altitude`, `transaction_at`, `created_at`, `updated_at`, `status_id`) VALUES
+(1, 1, 1, NULL, 2, -50000, NULL, NULL, NULL, NULL, NULL, NULL, '2016-03-13 17:55:17', '2016-03-11 20:10:48', '2016-05-11 04:29:18', 1),
+(2, 2, 2, NULL, 1, -250000, 'Lumayan baru gajian', 'dummy.jpg', 'Sate Khas Senayan', '-6.2173012', '106.7838386', NULL, '2016-03-15 02:27:18', '2016-03-26 08:38:24', '2016-05-11 04:29:22', 1),
+(3, 1, 1, 2, 4, -700000, 'Tarik tunai', NULL, NULL, NULL, NULL, NULL, '2016-03-28 02:34:31', '2016-03-28 02:34:31', '2016-05-11 04:29:27', 1),
+(4, 1, 1, NULL, 5, 500000, 'Gajian', NULL, NULL, NULL, NULL, NULL, '2016-05-11 04:33:19', '2016-05-11 04:33:19', '2016-05-11 05:14:52', 1);
 
 -- --------------------------------------------------------
 
@@ -112,7 +114,7 @@ CREATE TABLE `transaction_categories` (
   `user_id` int(11) DEFAULT NULL,
   `name` varchar(255) NOT NULL,
   `icon_class` varchar(20) NOT NULL,
-  `hex_color` varchar(7) NOT NULL,
+  `hex_color` varchar(7) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `status_id` int(11) NOT NULL DEFAULT '1'
@@ -125,7 +127,9 @@ CREATE TABLE `transaction_categories` (
 INSERT INTO `transaction_categories` (`id`, `user_id`, `name`, `icon_class`, `hex_color`, `created_at`, `updated_at`, `status_id`) VALUES
 (1, NULL, 'Makan', 'fa fa-cutlery', '#F5A623', '2016-03-12 17:34:01', '2016-03-28 02:50:24', 1),
 (2, NULL, 'Telepon', 'fa fa-phone', '#4A90E2', '2016-03-12 14:07:30', '2016-03-28 02:50:28', 1),
-(3, NULL, 'Transport', 'fa fa-bus', '#E74C3C', '2016-03-12 14:07:38', '2016-03-28 02:50:31', 1);
+(3, NULL, 'Transport', 'fa fa-bus', '#E74C3C', '2016-03-12 14:07:38', '2016-03-28 02:50:31', 1),
+(4, NULL, 'Transfer', 'fa fa-exchange', NULL, '2016-04-05 03:28:49', '2016-05-11 04:29:59', 3),
+(5, NULL, 'Gajian', 'fa fa-money', '#4A90E2', '2016-05-11 04:31:14', '2016-05-11 04:32:29', 2);
 
 -- --------------------------------------------------------
 
@@ -252,12 +256,12 @@ ALTER TABLE `sources_collaborators`
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `transaction_categories`
 --
 ALTER TABLE `transaction_categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `transaction_comments`
 --

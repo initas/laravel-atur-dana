@@ -49,7 +49,8 @@ $whitelist = array(
     'localhost',
     '127.0.0.1',
     '192.168.1.6',
-    '10.0.0.194'
+    '10.0.0.194',
+    '192.168.1.4'
 );
 
 if(in_array($serverName, $whitelist)){
