@@ -13,11 +13,11 @@ class Source extends MainModel
 	#protected
 
     protected $table = 'sources';
-    protected $hide = ['user_id', 'created_at', 'status_id'];
-    protected $add = ['amount', 'transaction_count', 'collaborator_count', 'user', 'collaborators'];
 
     #public
 
+    public $hide = ['user_id', 'created_at', 'status_id'];
+    public $add = ['amount', 'transaction_count', 'collaborator_count', 'user', 'collaborators'];
     public $rules = [
         'name' => 'required',
         'hex_color' => 'required',

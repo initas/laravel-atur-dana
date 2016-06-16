@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class MainModel extends Model
+class MainModel extends \MFebriansyah\LaravelContentManager\Model\MainModel
 {
     /*
     |--------------------------------------------------------------------------

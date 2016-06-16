@@ -13,11 +13,11 @@ class TransactionCategory extends MainModel
 	#protected
 
     protected $table = 'transaction_categories';
-    protected $hide = ['created_at', 'status_id'];
-    protected $add = [];
 
     #public
 
+    public $hide = ['created_at', 'status_id'];
+    public $add = [];
     public $rules = [
         'name' => 'required',
         'hex_color' => 'required',

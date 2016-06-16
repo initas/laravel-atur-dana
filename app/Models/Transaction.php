@@ -14,11 +14,11 @@ class Transaction extends MainModel
 
 	protected $table = 'transactions';
     protected $hidden = ['pivot'];
-    protected $hide = ['user_id', 'source_id', 'to_source_id', 'transaction_category_id', 'image_url', 'geo_location', 'latitude', 'longitude', 'altitude', 'created_at', 'status_id'];
-    protected $add = ['user', 'source', 'to_source', 'category', 'image', 'location', 'logged_on_user'];
 
     #public
 
+    public $hide = ['user_id', 'source_id', 'to_source_id', 'transaction_category_id', 'image_url', 'geo_location', 'latitude', 'longitude', 'altitude', 'created_at', 'status_id'];
+    public $add = ['user', 'source', 'to_source', 'category', 'image', 'location', 'logged_on_user'];
     public $rules = [
         'amount' => 'required|numeric',
         'source_id' => 'required|int',
