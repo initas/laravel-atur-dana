@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Libraries\Embed;
+use MFebriansyah\LaravelAPIManager\Controllers\MainController;
 
 class EmbedController extends MainController
 {

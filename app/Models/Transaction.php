@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use MFebriansyah\LaravelContentManager\Model\MainModel;
+
 class Transaction extends MainModel
 {
     /*
@@ -30,22 +32,6 @@ class Transaction extends MainModel
     | METHODS
     |--------------------------------------------------------------------------
     */
-
-    #GET
-
-    public function getAll()
-    {
-        return $this->setAppends($this->add)
-            ->setHidden($this->hide)
-            ->transform($this->filter());
-    }
-
-    public function getOne($id)
-    {
-        return $this->setHidden($this->hide)
-            ->setAppends($this->add)
-            ->one($id);
-    }
 
     #POST
 
@@ -83,16 +69,6 @@ class Transaction extends MainModel
         $this->user_id = (new User)->getLogOnData()->id;
 
         return $this->validSave();
-    }
-
-    #DELETE
-
-    public function deleteRecord()
-    {
-        $this->status_id = 0;
-        $this->save();
-
-        return $this;
     }
 
     /*

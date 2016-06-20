@@ -23,7 +23,8 @@
         ],
         "psr-4": {
             "App\\": "app/",
-            "MFebriansyah\\LaravelContentManager\\": "packages/mfebriansyah/laravel-content-manager/src"
+            "MFebriansyah\\LaravelContentManager\\": "packages/mfebriansyah/laravel-content-manager/src",
+            "MFebriansyah\\LaravelAPIManager\\": "packages/mfebriansyah/laravel-api-manager/src"
         }
     },
     "autoload-dev": {

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use MFebriansyah\LaravelContentManager\Model\MainModel;
+
 class Source extends MainModel
 {
     /*
@@ -29,22 +31,6 @@ class Source extends MainModel
     | METHODS
     |--------------------------------------------------------------------------
     */
-
-    public function getAll()
-    {
-        $model = $this->setAppends($this->add)
-            ->setHidden($this->hide)
-            ->transform($this->paginate(15));
-
-        return $model;
-    }
-
-    public function getOne($id)
-    {
-        return $this->setHidden($this->hide)
-            ->setAppends($this->add)
-            ->one($id);
-    }
 
     #POST
 
@@ -115,7 +101,7 @@ class Source extends MainModel
         $user = new User();
 
         $filter = $this->collaborators()
-            ->select(['users.id', 'full_name', 'users.image_url'])
+            ->select(['users.id', 'full_name', 'users.image_url', 'username'])
             ->get();
 
         return $user->setAppends(['image'])
@@ -126,7 +112,7 @@ class Source extends MainModel
     public function getUserAttribute()
     {
         return $this->user()
-            ->select(['id', 'full_name', 'image_url'])
+            ->select(['id', 'full_name', 'image_url', 'username'])
             ->first()
             ->setHidden(['image_url'])
             ->setAppends(['image']);

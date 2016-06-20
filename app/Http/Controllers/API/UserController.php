@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\User as Model;
+use MFebriansyah\LaravelAPIManager\Controllers\MainController;
 
 class UserController extends MainController
 {

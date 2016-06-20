@@ -166,7 +166,13 @@ return [
         * laravel content manager
         */
 
-        MFebriansyah\LaravelContentManager\LaravelCOntentManagerServiceProvider::class,
+        MFebriansyah\LaravelContentManager\LaravelContentManagerServiceProvider::class,
+
+        /*
+        * laravel api manager
+        */
+
+        MFebriansyah\LaravelAPIManager\LaravelAPIManagerServiceProvider::class,
     ],
 
     /*

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use MFebriansyah\LaravelContentManager\Model\MainModel;
 
-class TransactionCategory extends MainModel
+class TransactionComment extends MainModel
 {
     /*
     |--------------------------------------------------------------------------
@@ -14,35 +14,12 @@ class TransactionCategory extends MainModel
 
 	#protected
 
-    protected $table = 'transaction_categories';
+    protected $table = 'transaction_comments';
 
     #public
 
-    public $hide = ['created_at', 'status_id'];
-    public $add = [];
-    public $rules = [
-        'name' => 'required',
-        'hex_color' => 'required',
-        'icon_class' => 'required'
-    ];
-
-    /*
-    |--------------------------------------------------------------------------
-    | METHODS
-    |--------------------------------------------------------------------------
-    */
-
-    #POST
-
-    public function postNew()
-    {
-        $this->name = request()->input('name');
-        $this->icon_class = request()->input('icon_class');
-        $this->hex_color = request()->input('hex_color');
-        $this->user_id = (new User)->getLogOnData()->id;
-
-        return $this->validSave();
-    }
+    public $hide = ['user_id', 'transaction_id', 'created_at', 'status_id'];
+    public $add = ['user'];
 
     /*
     |--------------------------------------------------------------------------
@@ -50,9 +27,29 @@ class TransactionCategory extends MainModel
     |--------------------------------------------------------------------------
     */
 
-    public function transaction()
+    public function user()
     {
-        return $this->belongsTo('App\Model\Transaction');
+        return $this->hasOne('App\Models\User', 'id', 'user_id');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | APPENDS
+    |--------------------------------------------------------------------------
+    */
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return strtotime($value);
+    }
+
+    public function getUserAttribute($value)
+    {
+        return $this->user()
+            ->select(['id', 'full_name', 'image_url'])
+            ->first()
+            ->setHidden(['image_url'])
+            ->setAppends(['image']);
     }
 
     /*
@@ -61,9 +58,9 @@ class TransactionCategory extends MainModel
     |--------------------------------------------------------------------------
     */
 
-    public function getUpdatedAtAttribute($value)
+    public function getLoggedOnUserAttribute()
     {
-        return strtotime($value);
+
     }
 
 }

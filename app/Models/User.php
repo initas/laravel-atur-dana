@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Libraries\Request;
+use MFebriansyah\LaravelContentManager\Model\MainModel;
 
 class User extends MainModel
 {
@@ -17,29 +18,13 @@ class User extends MainModel
     public $hide = ['password', 'fb_id', 'unique_id', 'created_at', 'status_id', 'auth_token', 'image_url', 'cover_image_url', 'pivot'];
     public $add = ['image', 'cover_image'];
 
-    protected $imagesFolder = SERVER.'/embed/users';
+    public $imagesFolder = SERVER.'/embed/users';
 
     /*
     |--------------------------------------------------------------------------
     | METHODS
     |--------------------------------------------------------------------------
     */
-
-    #GET
-
-    public function getAll()
-    {
-        return $this->setAppends($this->add)
-            ->setHidden($this->hide)
-            ->transform($this->get());
-    }
-
-    public function getOne($id)
-    {
-        return $this->setHidden($this->hide)
-            ->setAppends($this->add)
-            ->one($id);
-    }
 
     public function getUniqueId($uniqueId = 0, $field = 'unique_id')
     {
