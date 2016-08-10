@@ -41,7 +41,8 @@ define('PUBLISHED', 20);
 //url
 $serverPort = (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] != 80) ? ':'.$_SERVER['SERVER_PORT'] : '';
 $serverName = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'].$serverPort : '';
-$server = 'http://'.$serverName;
+$domain = 'http://'.$serverName;
+$server = $domain.'/aturdana/public';
 
 //mf.dev server
 
@@ -52,11 +53,11 @@ $whitelist = array(
     '10.0.0.194',
     '192.168.1.4',
     '192.168.56.1',
-    '192.168.1.149'
+    '192.168.1.143'
 );
 
 if(in_array($serverName, $whitelist)){
-	$server = $server.'/aturdana/public';
+	$server = $domain.'/aturdana/public';
 }
 
 //aws.dev server
@@ -66,7 +67,7 @@ $whitelist = array(
 );
 
 if(in_array($serverName, $whitelist)){
-	$server = $server.'/public';
+	$server = $domain.'/public';
 }
 
 define('SERVER', $server);

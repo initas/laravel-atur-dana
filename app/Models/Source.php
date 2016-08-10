@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use MFebriansyah\LaravelContentManager\Model\MainModel;
+use MFebriansyah\LaravelContentManager\Models\MainModel;
 
 class Source extends MainModel
 {

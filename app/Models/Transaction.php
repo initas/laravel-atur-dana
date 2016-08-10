@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use MFebriansyah\LaravelContentManager\Model\MainModel;
+use MFebriansyah\LaravelContentManager\Models\MainModel;
 
 class Transaction extends MainModel
 {
@@ -216,6 +216,9 @@ class Transaction extends MainModel
 
     public function getLoggedOnUserAttribute()
     {
+        $response['is_pinned'] = ((new User)->getLogOnData()->transactions()->where('transaction_id', $this->id)->count('users_pin_transactions.id')) ? true : false;
+
+        return $response;
 
     }
 }

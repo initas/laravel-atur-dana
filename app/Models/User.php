@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Libraries\Request;
-use MFebriansyah\LaravelContentManager\Model\MainModel;
+use MFebriansyah\LaravelContentManager\Models\MainModel;
 
 class User extends MainModel
 {
@@ -19,6 +19,55 @@ class User extends MainModel
     public $add = ['image', 'cover_image'];
 
     public $imagesFolder = SERVER.'/embed/users';
+
+    /*
+    |--------------------------------------------------------------------------
+    | METHODS
+    |--------------------------------------------------------------------------
+    */
+
+    #GET
+
+    public function getPins()
+    {
+        $transactions = new Transaction();
+
+        $filter = $this->getLogOnData()->transactions()->get();
+
+        return $transactions->setAppends($transactions->add)
+            ->setHidden($transactions->hide)
+            ->transform($filter);
+    }
+
+    #POST
+
+    public function postPin()
+    {
+        $transaction_id = Request::input('transaction_id');
+        
+        if(((new User)->getLogOnData()->transactions()->where('transaction_id', $transaction_id)->count('users_pin_transactions.id'))){
+            $this->getLogOnData()->transactions()->detach([$transaction_id]);
+            return false;
+        }else{
+            $this->getLogOnData()->transactions()->attach([$transaction_id]);
+            return true;
+        }
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONSHIP
+    |--------------------------------------------------------------------------
+    */
+
+    public function transactions()
+    {
+      return $this->belongsToMany('App\Models\Transaction', 'users_pin_transactions');
+    }
+
+
+
+    /*------------------------------------*/
 
     /*
     |--------------------------------------------------------------------------
@@ -55,11 +104,13 @@ class User extends MainModel
             ->orWhere('email', $username)
             ->first();
 
-        $model = ($model) ? $model->setHidden($hide) : $model;
+        $model = ($model) 
+            ? $model->setAppends($this->add)->setHidden($hide)
+            : $model;
 
         $compare = false;
 
-        if($model){
+        if($model){ 
             $compare = self::compareHash($password, $model->password);
         }else{
             if($model){
@@ -172,10 +223,9 @@ class User extends MainModel
 
     /*
     |--------------------------------------------------------------------------
-    | RELATIONSHIP
+    | Append
     |--------------------------------------------------------------------------
     */
-
 
     public function getUpdatedAtAttribute($value)
     {
