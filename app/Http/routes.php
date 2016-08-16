@@ -38,13 +38,32 @@ Route::group(['middleware' => ['web']], function () {
 
 Route::group(['prefix' => '/api/v1'], function () {
 
+	Route::group(['prefix' => '/collections'], function () {
+		Route::get('/dashboard', 'API\CollectionController@getDashboard');
+	});
+
+	Route::group(['prefix' => '/sources'], function () {
+
+		Route::get('/', 'API\SourceController@getAll');
+		Route::post('/', 'API\SourceController@postNew');
+
+		Route::group(['prefix' => '/{id}'], function () {
+
+			Route::get('/', 'API\SourceController@getOne');
+			Route::put('/', 'API\SourceController@putUpdate');
+			Route::delete('/', 'API\SourceController@deleteRecord');
+
+		});
+
+	});
+
 	Route::group(['prefix' => '/transaction-categories'], function () {
 
 		Route::get('/', 'API\TransactionCategoryController@getAll');
 		Route::post('/', 'API\TransactionCategoryController@postNew');
 
 		Route::group(['prefix' => '/{id}'], function () {
-		
+
 			Route::get('/', 'API\TransactionCategoryController@getOne');
 			Route::put('/', 'API\TransactionCategoryController@putUpdate');
 			Route::delete('/', 'API\TransactionCategoryController@deleteRecord');
@@ -59,7 +78,7 @@ Route::group(['prefix' => '/api/v1'], function () {
 		Route::post('/', 'API\TransactionCommentController@postNew');
 
 		Route::group(['prefix' => '/{id}'], function () {
-		
+
 			Route::get('/', 'API\TransactionCommentController@getOne');
 			Route::put('/', 'API\TransactionCommentController@putUpdate');
 			Route::delete('/', 'API\TransactionCommentController@deleteRecord');
@@ -74,7 +93,7 @@ Route::group(['prefix' => '/api/v1'], function () {
 		Route::post('/', 'API\TransactionController@postNew');
 
 		Route::group(['prefix' => '/{id}'], function () {
-		
+
 			Route::get('/', 'API\TransactionController@getOne');
 			Route::put('/', 'API\TransactionController@putUpdate');
 			Route::delete('/', 'API\TransactionController@deleteRecord');
@@ -85,17 +104,33 @@ Route::group(['prefix' => '/api/v1'], function () {
 
 	Route::group(['prefix' => '/users'], function () {
 
-		Route::get('/', 'API\TransactionController@getAll');
-		Route::post('/', 'API\TransactionController@postNew');
-		Route::post('/login', 'API\TransactionController@postLogin');
+		Route::get('/', 'API\UserController@getAll');
+		Route::post('/', 'API\UserController@postNew');
+		Route::post('/login', 'API\UserController@postLogin');
 
 		Route::group(['prefix' => '/{id}'], function () {
-		
-			Route::get('/', 'API\TransactionController@getOne');
-			Route::put('/', 'API\TransactionController@putUpdate');
+
+			Route::get('/', 'API\UserController@getOne');
+			Route::put('/', 'API\UserController@putUpdate');
 
 		});
 
 	});
 
+});
+
+/*
+|--------------------------------------------------------------------------
+| On Demand Image Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::group(array('prefix' => 'embed'), function()
+{
+	Route::get('thumb/{size}/{file_name}', 'API\EmbedController@getThumb')->where('file_name','.+');
+	Route::get('height/{height}/{file_name}', 'API\EmbedController@getByHeight')->where('file_name','.+');
+	Route::get('width/{width}/{file_name}', 'API\EmbedController@getByWidth')->where('file_name','.+');
+	Route::get('{x}/{y}/{width}/{height}/{file_name}', 'API\EmbedController@getCroppedXY')->where('file_name','.+');
+	Route::get('{width}/{height}/{file_name}', 'API\EmbedController@getCropped')->where('file_name','.+');
+	Route::get('/{file_name}', 'API\EmbedController@getOriginal')->where('file_name','.+');
 });

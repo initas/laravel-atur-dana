@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Libraries\Request;
+use MFebriansyah\LaravelContentManager\Models\MainModel;
 
 class Transaction extends MainModel
 {
@@ -16,13 +16,14 @@ class Transaction extends MainModel
 
 	protected $table = 'transactions';
     protected $hidden = ['pivot'];
-    protected $hide = ['user_id', 'transaction_category_id', 'image_url', 'geo_location', 'latitude', 'longitude', 'altitude', 'created_at', 'status_id'];
-    protected $add = ['user', 'category', 'image', 'location', 'logged_on_user'];
 
     #public
-    
+
+    public $hide = ['user_id', 'source_id', 'to_source_id', 'transaction_category_id', 'image_url', 'geo_location', 'latitude', 'longitude', 'altitude', 'created_at', 'status_id'];
+    public $add = ['user', 'source', 'to_source', 'category', 'image', 'location', 'logged_on_user'];
     public $rules = [
         'amount' => 'required|numeric',
+        'source_id' => 'required|int',
         'transaction_category_id' => 'required|int'
     ];
 
@@ -32,35 +33,20 @@ class Transaction extends MainModel
     |--------------------------------------------------------------------------
     */
 
-    #GET
-    
-    public function getAll()
-    {
-        return $this->setAppends($this->add)
-            ->setHidden($this->hide)
-            ->transform($this->filter());
-    }
-
-    public function getOne($id)
-    {
-        return $this->setHidden($this->hide)
-            ->setAppends($this->add)
-            ->one($id);
-    }
-
     #POST
 
     public function postNew()
     {
-        $this->amount = Request::input('amount');
-        $this->transaction_category_id = Request::input('transaction_category_id');
-        $this->description = Request::input('description');
-        $this->image_url = Request::input('image_url');
-        $this->geo_location = Request::input('geo_location');
-        $this->latitude = Request::input('latitude');
-        $this->longitude = Request::input('longitude');
-        $this->altitude = Request::input('altitude');
-        $this->transaction_at = Request::input('transaction_at');
+        $this->amount = request()->input('amount');
+        $this->source_id = request()->input('source_id');
+        $this->transaction_category_id = request()->input('transaction_category_id');
+        $this->description = request()->input('description');
+        $this->image_url = request()->input('image_url');
+        $this->geo_location = request()->input('geo_location');
+        $this->latitude = request()->input('latitude');
+        $this->longitude = request()->input('longitude');
+        $this->altitude = request()->input('altitude');
+        $this->transaction_at = request()->input('transaction_at');
         $this->user_id = (new User)->getLogOnData()->id;
 
         return $this->validSave();
@@ -70,28 +56,19 @@ class Transaction extends MainModel
 
     public function putUpdate()
     {
-        $this->amount = Request::input('amount');
-        $this->transaction_category_id = Request::input('transaction_category_id');
-        $this->description = Request::input('description');
-        $this->image_url = Request::input('image_url');
-        $this->geo_location = Request::input('geo_location');
-        $this->latitude = Request::input('latitude');
-        $this->longitude = Request::input('longitude');
-        $this->altitude = Request::input('altitude');
-        $this->transaction_at = Request::input('transaction_at');
+        $this->amount = request()->input('amount');
+        $this->source_id = request()->input('source_id');
+        $this->transaction_category_id = request()->input('transaction_category_id');
+        $this->description = request()->input('description');
+        $this->image_url = request()->input('image_url');
+        $this->geo_location = request()->input('geo_location');
+        $this->latitude = request()->input('latitude');
+        $this->longitude = request()->input('longitude');
+        $this->altitude = request()->input('altitude');
+        $this->transaction_at = request()->input('transaction_at');
         $this->user_id = (new User)->getLogOnData()->id;
 
         return $this->validSave();
-    }
-
-    #DELETE
-
-    public function deleteRecord()
-    {
-        $this->status_id = 0;
-        $this->save();
-
-        return $this;
     }
 
     /*
@@ -105,11 +82,6 @@ class Transaction extends MainModel
         return $this->hasOne('App\Models\TransactionCategory', 'id', 'transaction_category_id');
     }
 
-    public function user()
-    {
-        return $this->hasOne('App\Models\User', 'id', 'user_id');
-    }
-
     public function comments()
     {
         return $this->hasMany('App\Models\TransactionComment');
@@ -118,6 +90,21 @@ class Transaction extends MainModel
     public function likes()
     {
         return $this->belongsToMany('App\Models\User', 'transaction_likes', 'transaction_id', 'user_id');
+    }
+
+    public function source()
+    {
+        return $this->hasOne('App\Models\Source', 'id', 'source_id');
+    }
+
+    public function toSource()
+    {
+        return $this->hasOne('App\Models\Source', 'id', 'to_source_id');
+    }
+
+    public function user()
+    {
+        return $this->hasOne('App\Models\User', 'id', 'user_id');
     }
 
     /*
@@ -131,17 +118,17 @@ class Transaction extends MainModel
         $model = ($model) ? $model : $this;
         $model = $model->where('status_id', '!=', 0)->orderBy('id');
 
-        if($categories = Request::input('categories')){
+        if($categories = request()->input('categories')){
             $categories = (is_array($categories)) ? $categories : [$categories];
             $model = $model->whereIn('transaction_category_id', $categories);
         }
 
-        if($users = Request::input('users')){
+        if($users = request()->input('users')){
             $users = (is_array($users)) ? $users : [$users];
             $model = $model->whereIn('user_id', $users);
         }
 
-        $limit = Request::input('limit', 15);
+        $limit = request()->input('limit', 15);
         $model = $model->paginate($limit);
 
         return $model;
@@ -155,22 +142,42 @@ class Transaction extends MainModel
 
     public function getCategoryAttribute()
     {
-        return $this->category()->select(['id', 'name'])->first();
-    }
+        $result = $this->category()->select(['id', 'name', 'hex_color', 'icon_class'])->first();
 
-    public function getUserAttribute()
-    {
-        return $this->user()->select(['id', 'full_name'])->first();
+        if($this->to_source_id){
+            $result->hex_color = $this->source()->pluck('hex_color')->first();
+        }
+
+        return $result;
     }
 
     public function getLocationAttribute()
     {
         return [
-                'name' => $this->geo_location,
-                'latitude' => $this->latitude,
-                'longitude' => $this->longitude,
-                'altitude' => $this->altitude,
+            'name' => $this->geo_location,
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
+            'altitude' => $this->altitude,
         ];
+    }
+
+    public function getSourceAttribute()
+    {
+        return $this->source()->select(['id', 'name', 'hex_color'])->first();
+    }
+
+    public function getToSourceAttribute()
+    {
+        return $this->toSource()->select(['id', 'name', 'hex_color'])->first();
+    }
+
+    public function getUserAttribute()
+    {
+        return $this->user()
+            ->select(['id', 'full_name', 'image_url'])
+            ->first()
+            ->setHidden(['image_url'])
+            ->setAppends(['image']);
     }
 
     public function getUpdatedAtAttribute($value)
@@ -183,6 +190,24 @@ class Transaction extends MainModel
         return strtotime($value);
     }
 
+    public function getImageAttribute($value, $fieldName = 'image_url'){
+        if($this->$fieldName){
+            $images['original'] = $this->imagesFolder.'/'.$this->$fieldName.'?index='.INDEX;
+
+            foreach($this->coverResolutions as $name => $value){
+                $images[$name] = $this->imagesFolder.$value.'/'.$this->$fieldName.'?index='.INDEX;
+            }
+        }else{
+            $images['original'] = null;
+
+            foreach($this->coverResolutions as $name => $value){
+                $images[$name] = null;
+            }
+        }
+
+        return $images;
+    }
+
     /*
     |--------------------------------------------------------------------------
     | LOGGED ON APPENDS
@@ -191,6 +216,9 @@ class Transaction extends MainModel
 
     public function getLoggedOnUserAttribute()
     {
+        $response['is_pinned'] = ((new User)->getLogOnData()->transactions()->where('transaction_id', $this->id)->count('users_pin_transactions.id')) ? true : false;
+
+        return $response;
 
     }
 }

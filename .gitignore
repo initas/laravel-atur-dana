@@ -1,4 +1,6 @@
 /vendor
+/public/bower_components
+/packages
 /node_modules
 /public/storage
 Homestead.yaml

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\TransactionCategory as Model;
+use App\Models\Source as Model;
 use MFebriansyah\LaravelAPIManager\Controllers\MainController;
 
-class TransactionCategoryController extends MainController
+class SourceController extends MainController
 {
 	public function __construct(Model $model)
     {

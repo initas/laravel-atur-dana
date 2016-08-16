@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Libraries\Request;
+use MFebriansyah\LaravelContentManager\Models\MainModel;
 
 class User extends MainModel
 {
@@ -14,7 +15,10 @@ class User extends MainModel
 
     protected $table = 'users';
     protected $hidden = ['password'];
-    protected $hide = ['password', 'fb_id', 'unique_id', 'created_at', 'status_id', 'auth_token'];
+    public $hide = ['password', 'fb_id', 'unique_id', 'created_at', 'status_id', 'auth_token', 'image_url', 'cover_image_url', 'pivot'];
+    public $add = ['image', 'cover_image'];
+
+    public $imagesFolder = SERVER.'/embed/users';
 
     /*
     |--------------------------------------------------------------------------
@@ -22,20 +26,54 @@ class User extends MainModel
     |--------------------------------------------------------------------------
     */
 
-    public function getOne($id)
-    {
-        $model = $this->setHidden($this->hide)->one($id);
+    #GET
 
-        return $model;
+    public function getPins()
+    {
+        $transactions = new Transaction();
+
+        $filter = $this->getLogOnData()->transactions()->get();
+
+        return $transactions->setAppends($transactions->add)
+            ->setHidden($transactions->hide)
+            ->transform($filter);
     }
 
-    public function getAll()
-    {
-        $model = $this->setHidden($this->hide)
-            ->transform($this->paginate(15));
+    #POST
 
-        return $model;
+    public function postPin()
+    {
+        $transaction_id = Request::input('transaction_id');
+        
+        if(((new User)->getLogOnData()->transactions()->where('transaction_id', $transaction_id)->count('users_pin_transactions.id'))){
+            $this->getLogOnData()->transactions()->detach([$transaction_id]);
+            return false;
+        }else{
+            $this->getLogOnData()->transactions()->attach([$transaction_id]);
+            return true;
+        }
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONSHIP
+    |--------------------------------------------------------------------------
+    */
+
+    public function transactions()
+    {
+      return $this->belongsToMany('App\Models\Transaction', 'users_pin_transactions');
+    }
+
+
+
+    /*------------------------------------*/
+
+    /*
+    |--------------------------------------------------------------------------
+    | METHODS
+    |--------------------------------------------------------------------------
+    */
 
     public function getUniqueId($uniqueId = 0, $field = 'unique_id')
     {
@@ -53,9 +91,7 @@ class User extends MainModel
         return $uniqueId;
     }
 
-    public function getUniqueUsername(){}
-    public function postNew(){}
-    public function puUpdate(){}
+    #POST
 
     public function postLogIn()
     {
@@ -68,11 +104,13 @@ class User extends MainModel
             ->orWhere('email', $username)
             ->first();
 
-        $model = ($model) ? $model->setHidden($hide) : $model;
+        $model = ($model) 
+            ? $model->setAppends($this->add)->setHidden($hide)
+            : $model;
 
         $compare = false;
 
-        if($model){
+        if($model){ 
             $compare = self::compareHash($password, $model->password);
         }else{
             if($model){
@@ -99,9 +137,9 @@ class User extends MainModel
 
         // for client (android and ios)
         if ($auth_token) {
-            
+
             $member = User::where('auth_token', $auth_token)->first();
-            
+
             if ($member) {
                 $member->auth_token = null;
                 $member->save();
@@ -120,6 +158,8 @@ class User extends MainModel
         return $model;
     }
 
+    #LOG
+
     public function getLogOnData()
     {
         $model = $this->getAPILogOnData();
@@ -127,11 +167,11 @@ class User extends MainModel
         if(!$model) {
             $model = $this->getHTTPLogOnData();
         }
-        
+
         return $model;
     }
 
-    public function getHTTPLogOnData()
+    private function getHTTPLogOnData()
     {
         $user = null;
 
@@ -143,7 +183,7 @@ class User extends MainModel
         return $user;
     }
 
-    public function getAPILogOnData()
+    private function getAPILogOnData()
     {
         $auth_token = Request::header('auth-token');
 
@@ -156,7 +196,7 @@ class User extends MainModel
         return $user;
     }
 
-    public function toHash($string, $random = null)
+    private static function toHash($string, $random = null)
     {
         $random = ($random) ? $random : rand(10, 30);
         $string = md5($string);
@@ -166,8 +206,8 @@ class User extends MainModel
 
         return $hash;
     }
-    
-    public function compareHash($string, $toCompare)
+
+    private static function compareHash($string, $toCompare)
     {
         $random = substr($toCompare, 0, 2);
         $hash = self::toHash($string, $random);
@@ -175,14 +215,29 @@ class User extends MainModel
         return ($hash == $toCompare);
     }
 
+
+
+    public function getUniqueUsername(){}
+    public function postNew(){}
+    public function puUpdate(){}
+
     /*
     |--------------------------------------------------------------------------
-    | RELATIONSHIP
+    | Append
     |--------------------------------------------------------------------------
     */
-   
-    public function comments()
+
+    public function getUpdatedAtAttribute($value)
     {
-        return $this->hasMany('App\Model\ContentComment');
+        return strtotime($value);
+    }
+
+    public function getLastLoginAtAttribute($value)
+    {
+        return strtotime($value);
+    }
+
+    public function getCoverImageAttribute(){
+        return $this->getImageAttribute(null, 'cover_image_url');
     }
 }
